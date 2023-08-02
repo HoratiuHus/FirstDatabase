@@ -6,7 +6,7 @@
 		@Created_at timestamp
 AS
 begin
-	update db.[Users] 
+	update dbo.[Users] 
 	set email = @Email, username = @Username, password = @Password
 	where id = @Id;
 end

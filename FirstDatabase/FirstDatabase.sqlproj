@@ -59,18 +59,31 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\Procedures" />
     <Folder Include="dbo\Tables" />
+    <Folder Include="dbo\Procedures\User" />
+    <Folder Include="dbo\Procedures\Post" />
+    <Folder Include="dbo\Procedures\Topic" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Procedures\spUser_Delete.sql" />
-    <Build Include="dbo\Procedures\spUser_Get.sql" />
-    <Build Include="dbo\Procedures\spUser_GetAll.sql" />
-    <Build Include="dbo\Procedures\spUser_Insert.sql" />
-    <Build Include="dbo\Procedures\spUser_Update.sql" />
     <Build Include="dbo\Tables\Comments.sql" />
     <Build Include="dbo\Tables\Posts.sql" />
     <Build Include="dbo\Tables\Posts_Topic.sql" />
     <Build Include="dbo\Tables\Topic.sql" />
     <Build Include="dbo\Tables\Users.sql" />
+    <Build Include="dbo\Procedures\User\spUser_Update.sql" />
+    <Build Include="dbo\Procedures\User\spUser_Insert.sql" />
+    <Build Include="dbo\Procedures\User\spUser_GetAll.sql" />
+    <Build Include="dbo\Procedures\User\spUser_Get.sql" />
+    <Build Include="dbo\Procedures\User\spUser_Delete.sql" />
+    <Build Include="dbo\Procedures\Post\spPost_GetAll.sql" />
+    <Build Include="dbo\Procedures\Post\spPost_Get.sql" />
+    <Build Include="dbo\Procedures\Post\spPost_Insert.sql" />
+    <Build Include="dbo\Procedures\Post\spPost_Update.sql" />
+    <Build Include="dbo\Procedures\Post\spPost_Delete.sql" />
+    <Build Include="dbo\Procedures\Topic\spTopic_GetAll.sql" />
+    <Build Include="dbo\Procedures\Topic\spTopic_Get.sql" />
+    <Build Include="dbo\Procedures\Topic\spTopic_Insert.sql" />
+    <Build Include="dbo\Procedures\Topic\spTopic_Update.sql" />
+    <Build Include="dbo\Procedures\Topic\spTopic_Delete.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="FirstDatabase.refactorlog" />

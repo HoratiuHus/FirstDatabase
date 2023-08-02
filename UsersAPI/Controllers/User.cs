@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using DataAccess.DatabaseAccess;
 using Models.Response;
+using Models.Request;
 using DataAccess.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -27,7 +28,7 @@ namespace UsersAPI.Controllers
         [HttpGet]
         public async Task<IEnumerable<UserResponse>> GetUsers()
         {
-            var users = await _db.LoadDataAsync<DataAccess.Models.User, dynamic>(storedProcedure: "dbo.spUser_GetAll", new { });
+            var users = await _db.LoadDataAsync<User, dynamic>(storedProcedure: "dbo.spUser_GetAll", new { });
             List<UserResponse> usersResponse = new List<UserResponse>();
             foreach(var user in users)
             {
@@ -40,27 +41,33 @@ namespace UsersAPI.Controllers
 
         // GET api/User/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<UserResponse?> GetUserByID(int id, UserResponse user)
         {
-            return "value";
+            var results =  await _db.LoadDataAsync<User, dynamic>(
+            storedProcedure: "dbo.spUser_Get",
+            new { Id = id });
+            return new UserResponse(user.Id, user.Email, user.Username, user.CreatedAt);
         }
 
         // POST api/User
         [HttpPost]
-        public void Post([FromBody] string value)
+        public Task Post([FromBody] UserRequest user)
         {
+            return _db.SaveDataAsync(storedProcedure: "dbo.spUser_Insert", new { user.Email, user.Username, user.Password, CreatedAt = DateTime.Now});
         }
 
         // PUT api/User/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public Task Put(int id, [FromBody] UserRequest user)
         {
+            return _db.SaveDataAsync(storedProcedure: "dbo.spUser_Update", new { user.Email, user.Username, user.Password });
         }
 
         // DELETE api/User/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public Task Delete(int id)
         {
+            return _db.SaveDataAsync(storedProcedure: "dbo.spUser_Delete", new { Id = id });
         }
     }
 }

@@ -16,7 +16,6 @@ public class UserData : IUserData
     public async Task<IEnumerable<User>> GetUsersAsync()
     {
        return await _db.LoadDataAsync<User, dynamic>(storedProcedure: "dbo.spUser_GetAll", new { });
-
     }
 
     public async Task<User?> GetUserByIDAsync(int id)
@@ -31,7 +30,7 @@ public class UserData : IUserData
 
     public Task InsertUserAsync(User user)
     {
-        return _db.SaveDataAsync(storedProcedure: "dbo.spUser_Insert", new { user.Email, user.Username, user.Password });
+        return _db.SaveDataAsync(storedProcedure: "dbo.spUser_Insert", new { user.Email, user.Username, user.Password, user.CreatedAt });
     }
 
     public Task UpdateUserAsync(User user)
