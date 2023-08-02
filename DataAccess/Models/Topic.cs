@@ -10,7 +10,7 @@ namespace DataAccess.Models
     {
         public int Id { get; set; }
 
-        public string TopicName { get; set; }
+        public string Topic_Name { get; set; }
 
         public int UpVotes { get; set; }
 

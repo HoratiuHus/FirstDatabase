@@ -27,7 +27,7 @@ namespace UsersAPI.Controllers
             List<TopicResponse> topicsResponse = new List<TopicResponse>();
             foreach (var topic in topics)
             {
-                topicsResponse.Add(new TopicResponse(topic.Id, topic.TopicName, topic.UpVotes, topic.DownVotes));
+                topicsResponse.Add(new TopicResponse(topic.Id, topic.Topic_Name, topic.UpVotes, topic.DownVotes));
             }
 
             return topicsResponse;
@@ -47,14 +47,14 @@ namespace UsersAPI.Controllers
         [HttpPost]
         public Task Post([FromBody] TopicRequest topic)
         {
-            return _db.SaveDataAsync(storedProcedure: "dbo.spTopic_Insert", new { topic.TopicName });
+            return _db.SaveDataAsync(storedProcedure: "dbo.spTopic_Insert", new { Topic_Name = topic.TopicName, UpVotes = 0, DownVotes = 0 });
         }
 
         // PUT api/<Topic>/5
         [HttpPut("{id}")]
-        public Task Put(int id, [FromBody] TopicRequest topic)
+        public Task Put(int id, [FromBody] TopicUpdateRequest topic)
         {
-            return _db.SaveDataAsync(storedProcedure: "dbo.spTopic_Update", new { topic.TopicName });
+            return _db.SaveDataAsync(storedProcedure: "dbo.spTopic_Update", new { Id = topic.Id, Topic_Name = topic.TopicName , topic.UpVotes, topic.DownVotes });
         }
 
         // DELETE api/<Topic>/5

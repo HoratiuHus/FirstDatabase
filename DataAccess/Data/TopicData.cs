@@ -36,7 +36,7 @@ namespace DataAccess.Data
 
         public Task InsertTopicAsync(Topic topic)
         {
-            return _db.SaveDataAsync(storedProcedure: "dbo.spTopic_Insert", new { topic.TopicName, topic.UpVotes, topic.DownVotes });
+            return _db.SaveDataAsync(storedProcedure: "dbo.spTopic_Insert", new { topic.Topic_Name, topic.UpVotes, topic.DownVotes });
         }
 
         public Task UpdateTopicAsync(Topic topic)

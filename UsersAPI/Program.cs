@@ -10,6 +10,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddSingleton<IUserData, UserData>();
 builder.Services.AddSingleton<IPostData, PostData>();
+builder.Services.AddSingleton<ITopicData, TopicData>();
 builder.Services.AddControllers();
 
 var app = builder.Build();
