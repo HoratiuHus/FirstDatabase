@@ -2,7 +2,7 @@
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
     [user_id] INT NOT NULL, 
-    [comment] TEXT NOT NULL, 
+    [comment] NVARCHAR(MAX) NOT NULL, 
     [post_id] INT NULL, 
     [topic_id] INT NULL, 
     CONSTRAINT [FK_Comments_Users] FOREIGN KEY ([user_id]) REFERENCES [Users]([id]), 

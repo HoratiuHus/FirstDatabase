@@ -1,4 +1,5 @@
 ﻿using DataAccess.DatabaseAccess;
+using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 using Models.Request;
 using Models.Response;
@@ -28,7 +29,7 @@ namespace UsersAPI.Controllers
             foreach (var post in posts)
             {
                 postsResponse.Add(new PostResponse(post.Id, post.Title, post.Body, post.User_ID,
-                    post.Topic_ID, post.UpVotes, post.DownVotes, post.CreatedAt));
+                    post.Topic_ID, post.UpVotes, post.DownVotes, post.Created_At));
             }
 
             return postsResponse;
@@ -36,17 +37,32 @@ namespace UsersAPI.Controllers
 
         // GET api/<Post>/5
         [HttpGet("{id}")]
-        public async Task<PostResponse?> GetPostByID(int id, PostResponse post)
+        public async Task<PostResponse?> GetPostByID(int id)
         {
             var results = await _db.LoadDataAsync<Post, dynamic>(
             storedProcedure: "dbo.spPost_Get",
             new { Id = id });
-            return new PostResponse(post.Id, post.Title, post.Body, post.UserID,
-                    post.TopicID, post.UpVotes, post.DownVotes, post.CreatedAt);
+            var firstPost = results.FirstOrDefault();
+            return new PostResponse(firstPost.Id, firstPost.Title, firstPost.Body, firstPost.User_ID,
+                    firstPost.Topic_ID, firstPost.UpVotes, firstPost.DownVotes, firstPost.Created_At);
         }
 
+        //GET api/<Post>/5
+        [HttpGet("comments/{postId}")]
+        public async Task<List<CommentResponse>> GetCommentByID(int postId)
+        {
+            var results = await _db.LoadDataAsync<CommentModel, dynamic>(
+            storedProcedure: "dbo.spComment_Get",
+            new { PostId = postId });
+            List<CommentResponse> commentResponse = new List<CommentResponse>();
+            foreach (var result in results)
+                {
+                    commentResponse.Add(new CommentResponse(result.Id, result.User_Id, result.Comment, result.Post_Id, result.Topic_Id));
+                }
+            return commentResponse;
+        }
         // POST api/<Post>
-        [HttpPost("{id}")]
+        [HttpPost()]
         public Task Post([FromBody] PostRequest post)
         {
             return _db.SaveDataAsync(storedProcedure: "dbo.spPost_Insert", new { post.Title, post.Body, post.UserID,
@@ -55,9 +71,9 @@ namespace UsersAPI.Controllers
 
         // PUT api/<Post>/5
         [HttpPut("{id}")]
-        public Task Put(int id, [FromBody] PostRequest post)
+        public Task Put(int id, [FromBody] PostUpdateRequest post)
         {
-            return _db.SaveDataAsync(storedProcedure: "dbo.spPost_Update", new { post.Title, post.Body, post.TopicID });
+            return _db.SaveDataAsync(storedProcedure: "dbo.spPost_Update", new { Id = post.Id, Title = post.Title, post.UpVotes, post.DownVotes });
         }
 
         // DELETE api/<Post>/5

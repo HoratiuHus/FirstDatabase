@@ -4,24 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Models
+namespace Models.Request
 {
-    public class Post
+    public class PostUpdateRequest
     {
+        public PostUpdateRequest(int id, string postTitle, int upVotes, int downVotes)
+        {
+            Id = id;
+            Title = postTitle;
+            UpVotes = upVotes;
+            DownVotes = downVotes;
+        }
+
         public int Id { get; set; }
 
         public string Title { get; set; }
 
-        public string Body { get; set; }
-
-        public int User_ID { get; set; }
-
-        public int Topic_ID { get; set; }
-
         public int UpVotes { get; set; }
 
         public int DownVotes { get; set; }
-
-        public DateTime Created_At { get; set; }
     }
 }

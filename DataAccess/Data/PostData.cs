@@ -28,7 +28,7 @@ namespace DataAccess.Data
 
         public Task InsertPostAsync(Post post)
         {
-            return _db.SaveDataAsync(storedProcedure: "dbo.spPost_Insert", new { post.Title, post.Body, post.User_ID, post.Topic_ID, post.UpVotes, post.DownVotes, post.CreatedAt });
+            return _db.SaveDataAsync(storedProcedure: "dbo.spPost_Insert", new { post.Title, post.Body, post.User_ID, post.Topic_ID, post.UpVotes, post.DownVotes, CreatedAt = post.Created_At });
         }
 
         public Task UpdatePostAsync(Post post)

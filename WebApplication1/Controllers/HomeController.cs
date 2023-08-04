@@ -1,6 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Models.Response;
+using System.Net.Http.Headers;
+using Models.Request;
+using System.Text.Json;
+using System.Net;
 using WebApplication1.Models;
+using NuGet.Packaging.Signing;
+using System.Diagnostics;
 
 namespace WebApplication1.Controllers
 {
@@ -13,9 +19,30 @@ namespace WebApplication1.Controllers
             _logger = logger;
         }
 
+        public static readonly string url = "https://localhost:7249";
+
+        private async Task<IEnumerable<PostResponse>> GetAllPosts()
+        {
+            IEnumerable<PostResponse> postsInfo = new List<PostResponse>();
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage response = await client.GetAsync($"{url}/api/Post");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var posts = await response.Content.ReadFromJsonAsync<IEnumerable<PostResponse>>();
+                        if (posts != null)
+                            return posts.ToList();
+                    }
+                }
+            return postsInfo;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var response = GetAllPosts().Result;
+            return View(response);
         }
 
         public IActionResult Privacy()
