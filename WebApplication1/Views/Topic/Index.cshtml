@@ -1,0 +1,35 @@
+﻿@using Models.Response
+@model IEnumerable<TopicResponse>
+@{
+    ViewData["Title"] = "Topic Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Topics</h1>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TopicName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UpVotes)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DownVotes)
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td><input type="button" value="@item.TopicName" onclick="location.href='@Url.Action("Index", "Home", new {topicId = item.Id})'" /></td>
+                    <td>@item.UpVotes</td>
+                    <td>@item.DownVotes</td>
+                </tr>
+            }
+        </table>
+</div>

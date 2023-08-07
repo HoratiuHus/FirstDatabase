@@ -1,0 +1,22 @@
+﻿@using Models.Request
+@model UserRequest
+@{
+    ViewData["Title"] = "Register Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("CreateUser", "Register", FormMethod.Post))
+{
+<div class="text-allign">
+    <h1 class="display-4">Register</h1>
+    <label for="uname"><b>Username</b></label>
+        @Html.TextBoxFor(m => m.Username)
+    <label for="email"><b>Email</b></label>
+        @Html.TextBoxFor(m => m.Email)
+    <label for="psw"><b>Password</b></label>
+        @Html.TextBoxFor(m => m.Password)
+    @*<label for="cpsw"><b>Confirm Password</b></label>
+    <input type="password" placeholder="Confirm Password" name="cpsw" required>*@
+    <button type="submit">Register</button>
+
+</div>
+}

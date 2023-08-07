@@ -51,21 +51,37 @@ namespace UsersAPI.Controllers
 
         // POST api/User
         [HttpPost]
-        public Task Post([FromBody] UserRequest user)
+        public Task UserRegister([FromBody] UserRequest user)
         {
             return _db.SaveDataAsync(storedProcedure: "dbo.spUser_Insert", new { user.Email, user.Username, user.Password, CreatedAt = DateTime.Now});
         }
 
-        // PUT api/User/5
-        [HttpPut("{id}")]
-        public Task Put(int id, [FromBody] UserRequest user)
+
+        [HttpPost("login")]
+        public async Task<LoginResponse> UserLogin([FromBody] UserLoginRequest user)
         {
-            return _db.SaveDataAsync(storedProcedure: "dbo.spUser_Update", new { user.Email, user.Username, user.Password });
+            var results = await _db.LoadDataAsync<User, dynamic>(
+            storedProcedure: "dbo.spUser_GetByUsername",
+            new { Username = user.Username });
+            if (results.Count() == 0)
+                return new LoginResponse("User not found!");
+            else
+            {
+                if (results.First().Password == user.Password)
+                {
+                    return new LoginResponse("Logged in!");
+                }
+                else
+                {
+                    return new LoginResponse("Wrong password!");
+                }
+            }
+            throw new Exception();
         }
 
         // DELETE api/User/5
         [HttpDelete("{id}")]
-        public Task Delete(int id)
+        public Task UserDelete(int id)
         {
             return _db.SaveDataAsync(storedProcedure: "dbo.spUser_Delete", new { Id = id });
         }

@@ -61,24 +61,40 @@ namespace UsersAPI.Controllers
                 }
             return commentResponse;
         }
+
+        //GET api/<Post>/5
+        [HttpGet("topic/{topicId}")]
+        public async Task<List<PostResponse>> GetPostsByTopicId(int topicId)
+        {
+            var results = await _db.LoadDataAsync<Post, dynamic>(
+            storedProcedure: "dbo.spPost_GetByTopicId",
+            new { TopicId = topicId });
+            List<PostResponse> postResponse = new List<PostResponse>();
+            foreach (var result in results)
+            {
+                postResponse.Add(new PostResponse(result.Id, result.Title, result.Body, result.User_ID, result.Topic_ID, result.UpVotes, result.DownVotes, result.Created_At));
+            }
+            return postResponse;
+        }
+
         // POST api/<Post>
         [HttpPost()]
-        public Task Post([FromBody] PostRequest post)
+        public Task NewPost([FromBody] PostRequest post)
         {
-            return _db.SaveDataAsync(storedProcedure: "dbo.spPost_Insert", new { post.Title, post.Body, post.UserID,
-                post.TopicID, UpVotes = 0, DownVotes = 0  , CreatedAt = DateTime.Now });
+            return _db.SaveDataAsync(storedProcedure: "dbo.spPost_Insert", new { post.Title, post.Body, post.UserId,
+                post.TopicId, UpVotes = 0, DownVotes = 0  , CreatedAt = DateTime.Now });
         }
 
         // PUT api/<Post>/5
         [HttpPut("{id}")]
-        public Task Put(int id, [FromBody] PostUpdateRequest post)
+        public Task UpdatePost(int id, [FromBody] PostUpdateRequest post)
         {
             return _db.SaveDataAsync(storedProcedure: "dbo.spPost_Update", new { Id = post.Id, Title = post.Title, post.UpVotes, post.DownVotes });
         }
 
         // DELETE api/<Post>/5
         [HttpDelete("{id}")]
-        public Task Delete(int id)
+        public Task DeletePost(int id)
         {
             return _db.SaveDataAsync(storedProcedure: "dbo.spPost_Delete", new { Id = id });
         }

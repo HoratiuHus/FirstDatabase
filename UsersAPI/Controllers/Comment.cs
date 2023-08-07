@@ -21,14 +21,14 @@ namespace UsersAPI.Controllers
 
         // POST api/<Comment>
         [HttpPost()]
-        public Task Post([FromBody] CommentRequest comment)
+        public Task NewComment([FromBody] CommentRequest comment)
         {
             return _db.SaveDataAsync(storedProcedure: "dbo.spComment_Insert", new { comment.Comment, comment.UserId, comment.PostId, comment.TopicId });
         }
 
         // DELETE api/<Comment>/5
         [HttpDelete("{id}")]
-        public Task Delete(int id)
+        public Task DeleteComment(int id)
         {
             return _db.SaveDataAsync(storedProcedure: "dbo.spComment_Delete", new { Id = id });
         }

@@ -21,7 +21,7 @@ namespace WebApplication1.Controllers
 
         public static readonly string url = "https://localhost:7249";
 
-        private async Task<IEnumerable<PostResponse>> GetAllPosts()
+        public async Task<IEnumerable<PostResponse>> GetAllPosts()
         {
             IEnumerable<PostResponse> postsInfo = new List<PostResponse>();
                 using (HttpClient client = new HttpClient())
@@ -39,9 +39,31 @@ namespace WebApplication1.Controllers
             return postsInfo;
         }
 
-        public IActionResult Index()
+        public async Task<IEnumerable<PostResponse>> GetPostsByTopicId(int topicId)
         {
-            var response = GetAllPosts().Result;
+            IEnumerable<PostResponse> postsInfo = new List<PostResponse>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync($"{url}/api/Post/topic/{topicId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var posts = await response.Content.ReadFromJsonAsync<IEnumerable<PostResponse>>();
+                    if (posts != null)
+                        return posts.ToList();
+                }
+            }
+            return postsInfo;
+        }
+
+        public IActionResult Index(int topicId = 0)
+        {
+            IEnumerable<PostResponse> response = new List<PostResponse>();
+            if(topicId == 0)
+                response = GetAllPosts().Result;
+            else
+                response = GetPostsByTopicId(topicId).Result;
             return View(response);
         }
 

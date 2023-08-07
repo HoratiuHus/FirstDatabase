@@ -90,6 +90,8 @@
     <Build Include="dbo\Procedures\Comment\spComment_GetAll.sql" />
     <Build Include="dbo\Procedures\Comment\spComment_Insert.sql" />
     <Build Include="dbo\Procedures\Comment\spComment_Update.sql" />
+    <Build Include="dbo\Procedures\Post\spPost_GetByTopicId.sql" />
+    <Build Include="dbo\Procedures\User\sp_User_GetByUsername.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="FirstDatabase.refactorlog" />

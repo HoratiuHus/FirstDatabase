@@ -45,21 +45,21 @@ namespace UsersAPI.Controllers
 
         // POST api/<Topic>
         [HttpPost]
-        public Task Post([FromBody] TopicRequest topic)
+        public Task NewTopic([FromBody] TopicRequest topic)
         {
             return _db.SaveDataAsync(storedProcedure: "dbo.spTopic_Insert", new { Topic_Name = topic.TopicName, UpVotes = 0, DownVotes = 0 });
         }
 
         // PUT api/<Topic>/5
         [HttpPut("{id}")]
-        public Task Put(int id, [FromBody] TopicUpdateRequest topic)
+        public Task UpdateTopic(int id, [FromBody] TopicUpdateRequest topic)
         {
             return _db.SaveDataAsync(storedProcedure: "dbo.spTopic_Update", new { Id = topic.Id, Topic_Name = topic.TopicName , topic.UpVotes, topic.DownVotes });
         }
 
         // DELETE api/<Topic>/5
         [HttpDelete("{id}")]
-        public Task Delete(int id)
+        public Task DeleteTopic(int id)
         {
             return _db.SaveDataAsync(storedProcedure: "dbo.spTopic_Delete", new { Id = id });
         }
