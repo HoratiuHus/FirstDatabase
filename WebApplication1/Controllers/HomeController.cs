@@ -24,14 +24,14 @@ namespace WebApplication1.Controllers
         public async Task<IEnumerable<PostResponse>> GetAllPosts()
         {
             IEnumerable<PostResponse> postsInfo = new List<PostResponse>();
-                using (HttpClient client = new HttpClient())
+            IEnumerable<CommentResponse> commentsInfo = new List<CommentResponse>();
+            using (HttpClient client = new HttpClient())
                 {
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
                     HttpResponseMessage response = await client.GetAsync($"{url}/api/Post");
                     if (response.IsSuccessStatusCode)
                     {
-                        var posts = await response.Content.ReadFromJsonAsync<IEnumerable<PostResponse>>();
+                        var posts = await response.Content.ReadFromJsonAsync<List<PostResponse>>();
                         if (posts != null)
                             return posts.ToList();
                     }
@@ -57,10 +57,28 @@ namespace WebApplication1.Controllers
             return postsInfo;
         }
 
+
+        public ActionResult UpdatePostVotes(PostUpdateRequest postVotes)
+        {
+            IEnumerable<PostUpdateRequest> postVotesInfo = new List<PostUpdateRequest>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = client.PutAsJsonAsync($"{url}/api/Post", postVotes).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            return RedirectToAction("Index", "Post");
+        }
+
         public IActionResult Index(int topicId = 0)
         {
             IEnumerable<PostResponse> response = new List<PostResponse>();
-            if(topicId == 0)
+            if (topicId == 0)
                 response = GetAllPosts().Result;
             else
                 response = GetPostsByTopicId(topicId).Result;

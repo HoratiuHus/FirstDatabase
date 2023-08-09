@@ -26,12 +26,12 @@ namespace DataAccess.Data
             return results.FirstOrDefault();
         }
 
-        public Task InsertCommentAsync(CommentModel comment)
+        public Task InsertCommentAsync(Comments comment)
         {
             return _db.SaveDataAsync(storedProcedure: "dbo.spComment_Insert", new { comment.User_Id, comment.Comment, comment.Post_Id, comment.Topic_Id });
         }
 
-        public Task UpdateCommentAsync(CommentModel comment)
+        public Task UpdateCommentAsync(Comments comment)
         {
             return _db.SaveDataAsync(storedProcedure: "dbo.spComment_Update", comment);
         }

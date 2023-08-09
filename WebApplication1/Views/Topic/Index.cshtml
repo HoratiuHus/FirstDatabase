@@ -1,4 +1,5 @@
 ﻿@using Models.Response
+@using Models.Request
 @model IEnumerable<TopicResponse>
 @{
     ViewData["Title"] = "Topic Page";
@@ -27,8 +28,8 @@
                 <tr>
                     <td>@item.Id</td>
                     <td><input type="button" value="@item.TopicName" onclick="location.href='@Url.Action("Index", "Home", new {topicId = item.Id})'" /></td>
-                    <td>@item.UpVotes</td>
-                    <td>@item.DownVotes</td>
+                    <td><input type="button" value="UpVotes :@item.UpVotes" onclick="location.href='@Url.Action("UpdateTopicVotes", "Topic", new TopicUpdateRequest { Id = item.Id, UpVotes=item.UpVotes + 1, DownVotes= item.DownVotes})'" /></td>
+                    <td><input type="button" value="DownVotes :@item.DownVotes" onclick="location.href='@Url.Action("UpdateTopicVotes", "Topic", new TopicUpdateRequest { Id = item.Id, UpVotes=item.UpVotes, DownVotes= item.DownVotes + 1})'" /></td>
                 </tr>
             }
         </table>

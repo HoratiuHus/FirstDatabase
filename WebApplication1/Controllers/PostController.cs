@@ -28,7 +28,8 @@ namespace WebApplication1.Controllers
             }
             return RedirectToAction("Index", "Post");
         }
-        public ActionResult Index()
+
+            public ActionResult Index()
         {
             return View();
         }

@@ -32,6 +32,29 @@ namespace WebApplication1.Controllers
             return topicsInfo;
         }
 
+        [HttpGet]
+        public ActionResult UpdateTopicVotes(TopicUpdateRequest votes)
+        {
+            IEnumerable<TopicUpdateRequest> votesInfo = new List<TopicUpdateRequest>();
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = client.PutAsJsonAsync($"{url}/api/Topic", votes).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "Topic");
+                }
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        //public IActionResult UpVote(int upVotes = 0)
+        //{
+        //    return ;
+        //}
+
         public IActionResult Index(int topicId = 0)
         {
             var response = GetAllTopics().Result;

@@ -8,20 +8,20 @@ namespace Models.Response
 {
     public class CommentResponse
     {
-        public CommentResponse(int id, int userId, string comment, int postId, int topicId)
+        public CommentResponse(int id, int userId, string comment, int post_Id, int topic_Id)
         {
             Id = id;
             UserId = userId;
-            CommentText = comment;
-            Post_Id = postId;
-            Topic_Id = topicId;
+            Comment = comment;
+            Post_Id = post_Id;
+            Topic_Id = topic_Id;
         }
 
         public int Id { get; set; }
 
         public int UserId { get; set; }
 
-        public string CommentText { get; set; }
+        public string Comment { get; set; }
 
         public int Post_Id { get; set; }
 

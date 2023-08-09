@@ -51,10 +51,10 @@ namespace UsersAPI.Controllers
         }
 
         // PUT api/<Topic>/5
-        [HttpPut("{id}")]
-        public Task UpdateTopic(int id, [FromBody] TopicUpdateRequest topic)
+        [HttpPut]
+        public Task UpdateTopic([FromBody] TopicUpdateRequest topic)
         {
-            return _db.SaveDataAsync(storedProcedure: "dbo.spTopic_Update", new { Id = topic.Id, Topic_Name = topic.TopicName , topic.UpVotes, topic.DownVotes });
+            return _db.SaveDataAsync(storedProcedure: "dbo.spTopic_Update", new {topic.Id, topic.UpVotes, topic.DownVotes });
         }
 
         // DELETE api/<Topic>/5

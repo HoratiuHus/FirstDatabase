@@ -1,8 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Models.Request;
 using Models.Response;
+using Newtonsoft.Json.Linq;
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Security.Policy;
+using System.Text.Json;
 
 namespace WebApplication1.Controllers
 {
@@ -16,7 +23,6 @@ namespace WebApplication1.Controllers
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
                 HttpResponseMessage response = await client.GetAsync($"{url}/api/User/{userId}");
                 if (response.IsSuccessStatusCode)
                 {
@@ -26,9 +32,15 @@ namespace WebApplication1.Controllers
                 }
             }
             return userInfo;
+
         }
         public ActionResult Index()
         {
+            var token = Request.Cookies["token"].ToString();
+            if (token != null)
+            {
+                var userId = User.Claims.FirstOrDefault(x => x.Type.Equals("userId"));
+            }
             return View();
         }
     }

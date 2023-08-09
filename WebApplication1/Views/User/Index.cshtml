@@ -1,14 +1,12 @@
 ﻿@using Models.Response
 @model UserResponse
 @{
-    ViewData["Title"] = "Register Page";
+    ViewData["Title"] = "User Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @if (Model != null)
 {
-    @using (Html.BeginForm("GetUser", "User", FormMethod.Get))
-    {
         <div class="text-allign">
             <table class="table">
                 <tr>
@@ -24,14 +22,17 @@
                     <th>
                         @Html.DisplayNameFor(model => model.CreatedAt)
                     </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Role)
+                    </th>
                 </tr>
                 <tr>
                     <td>@Model.Id</td>
                     <td>@Model.Email</td>
                     <td>@Model.Username</td>
                     <td>@Model.CreatedAt</td>
+                    <td>@Model.Role</td>
                 </tr>
             </table>
         </div>
-    }
 }

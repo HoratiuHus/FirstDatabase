@@ -1,7 +1,7 @@
 ﻿
 namespace Models.Request
 {
-    public class UserRequest
+    public class UserRegisterRequest
     {
 
         //public UserRequest(string email, string username, string password)

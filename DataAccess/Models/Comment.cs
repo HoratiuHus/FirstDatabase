@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Models
 {
-    public class CommentModel
+    public class Comments
     {
         public int Id { get; set; }
 

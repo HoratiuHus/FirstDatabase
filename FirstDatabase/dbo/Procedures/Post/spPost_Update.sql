@@ -1,15 +1,10 @@
 ﻿CREATE PROCEDURE [dbo].[spPost_Update]
 		@Id		   int,
-		@Title	   nvarchar(50),
-		@Body	   text,
-		@UserId	   int,
-		@TopicId   int,
 		@Upvotes   int,
-		@Downvotes int,
-		@CreatedAt DateTime
+		@Downvotes int
 AS
 begin
 	update dbo.[Posts] 
-	set title = @Title, body = @Body, topic_id = @TopicId
+	SET upvotes = @Upvotes, downvotes = @Downvotes  
 	where id = @Id;
 end

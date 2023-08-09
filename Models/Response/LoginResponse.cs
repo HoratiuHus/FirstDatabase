@@ -8,11 +8,14 @@ namespace Models.Response
 {
     public class LoginResponse
     {
-        public LoginResponse(string message)
+        public LoginResponse(string message, string token)
         {
             Message = message;
+            Token = token;
         }
 
         public string Message { get; set; }
+
+        public string Token { get; set; }
     }
 }

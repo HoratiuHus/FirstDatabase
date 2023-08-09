@@ -21,7 +21,7 @@ namespace WebApplication1.Controllers
 
 
         [HttpPost]
-        public ActionResult CreateUser(UserRequest user)
+        public ActionResult CreateUser(UserRegisterRequest user)
         {
             IEnumerable<UserResponse> registerInfo = new List<UserResponse>();
             using (HttpClient client = new HttpClient())

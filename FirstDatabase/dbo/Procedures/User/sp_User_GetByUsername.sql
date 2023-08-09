@@ -2,7 +2,7 @@
 	@Username nvarchar(50)
 AS
 begin
-	select id, email, username, password, createdat
+	select id, email, username, password, createdat, role
 	from dbo.[Users]
 	where username = @Username;
 end

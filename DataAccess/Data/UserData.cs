@@ -30,7 +30,7 @@ public class UserData : IUserData
 
     public Task InsertUserAsync(User user)
     {
-        return _db.SaveDataAsync(storedProcedure: "dbo.spUser_Insert", new { user.Email, user.Username, user.Password, user.CreatedAt });
+        return _db.SaveDataAsync(storedProcedure: "dbo.spUser_Insert", new { user.Email, user.Username, user.Password, user.CreatedAt, user.Role });
     }
 
     public Task UpdateUserAsync(User user)

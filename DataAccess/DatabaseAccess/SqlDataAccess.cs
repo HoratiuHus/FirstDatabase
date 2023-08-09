@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Dapper;
 using System.Data;
+using System.Collections;
 
 namespace DataAccess.DatabaseAccess;
 
@@ -31,6 +32,25 @@ public class SqlDataAccess : ISqlDataAccess
             commandType: CommandType.StoredProcedure); // Talk to our connection, execute the stored procedure
                                                        // you have the parameters and you have to store the procedure
                                                        // it is gonna return an IEnumerable of type <T>
+    }
+
+    public async Task<(IEnumerable<T>, IEnumerable<V>)> LoadDataAsync<T, V, U>(
+        string storedProcedure,
+        U parameters,
+        string connectionId = "Default")
+    {
+        using IDbConnection connection = new SqlConnection(_config.GetConnectionString(connectionId));
+
+        var result =  connection.QueryMultiple(
+            storedProcedure,
+            parameters,
+            commandType: CommandType.StoredProcedure); // Talk to our connection, execute the stored procedure
+                                                       // you have the parameters and you have to store the procedure
+                                                       // it is gonna return an IEnumerable of type <T>
+
+        var t = result.Read<T>().ToList();
+        var v = result.Read<V>().ToList();
+        return (t, v);
     }
 
     public async Task SaveDataAsync<T>(

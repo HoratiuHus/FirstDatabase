@@ -36,6 +36,8 @@ namespace WebApplication1.Controllers
                         }
                         if (login.Message == "Logged in!")
                         {
+                            Response.Cookies.Append("token", login.Token,
+                            new CookieOptions() { Expires = DateTime.Now.AddDays(1) });
                             return RedirectToAction("Index", "Home");
                         }
                         else
@@ -48,78 +50,42 @@ namespace WebApplication1.Controllers
             throw new Exception();
         }
 
-        public IActionResult Index()
-        {
-             return View();
-        }
-
-        // GET: LoginController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Index()
         {
             return View();
         }
 
-        // GET: LoginController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //[HttpPost]
+        //public ActionResult WriteCookie()
+        //{
+        //    //Create a Cookie with a suitable Key.
+        //    HttpCookie nameCookie = new HttpCookie("Cookie");
 
-        // POST: LoginController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //    //Set the Cookie value.
+        //    nameCookie.Values["Name"] = Request.Form["name"];
 
-        // GET: LoginController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+        //    //Set the Expiry date.
+        //    nameCookie.Expires = DateTime.Now.AddDays(30);
 
-        // POST: LoginController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //    //Add the Cookie to Browser.
+        //    Response.Cookies.Add(nameCookie);
 
-        // GET: LoginController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        //    return RedirectToAction("Index");
+        //}
 
-        // POST: LoginController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //[HttpPost]
+        //public ActionResult ReadCookie()
+        //{
+        //    //Fetch the Cookie using its Key.
+        //    HttpCookie nameCookie = Request.Cookies["Name"];
+
+        //    //If Cookie exists fetch its value.
+        //    string name = nameCookie != null ? nameCookie.Value.Split('=')[1] : "undefined";
+
+        //    TempData["Message"] = name;
+
+        //    return RedirectToAction("Index");
+        //}
     }
 }
+

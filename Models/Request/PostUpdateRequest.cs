@@ -8,17 +8,15 @@ namespace Models.Request
 {
     public class PostUpdateRequest
     {
-        public PostUpdateRequest(int id, string postTitle, int upVotes, int downVotes)
-        {
-            Id = id;
-            Title = postTitle;
-            UpVotes = upVotes;
-            DownVotes = downVotes;
-        }
+        //public PostUpdateRequest(int id, string postTitle, int upVotes, int downVotes)
+        //{
+        //    Id = id;
+        //    Title = postTitle;
+        //    UpVotes = upVotes;
+        //    DownVotes = downVotes;
+        //}
 
         public int Id { get; set; }
-
-        public string Title { get; set; }
 
         public int UpVotes { get; set; }
 

@@ -6,7 +6,7 @@ namespace DataAccess.Data.Interfaces
     {
         Task DeleteCommentAsync(int id);
         Task<User?> GetByPostIDAsync(int id);
-        Task InsertCommentAsync(CommentModel comment);
-        Task UpdateCommentAsync(CommentModel comment);
+        Task InsertCommentAsync(Comments comment);
+        Task UpdateCommentAsync(Comments comment);
     }
 }

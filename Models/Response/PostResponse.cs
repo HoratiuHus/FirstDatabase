@@ -8,7 +8,7 @@ namespace Models.Response
 {
     public class PostResponse
     {
-        public PostResponse(int id, string title, string body, int userId, int topicId, int upVotes, int downVotes, DateTime createdAt)
+        public PostResponse(int id, string title, string body, int userId, int topicId, int upVotes, int downVotes, DateTime createdAt, List<CommentResponse> comments )
         {
             Id = id;
             Title = title;
@@ -18,6 +18,7 @@ namespace Models.Response
             UpVotes = upVotes;
             DownVotes = downVotes;
             CreatedAt = createdAt;
+            Comments = comments;
         }
         public int Id { get; set; }
 
@@ -34,5 +35,7 @@ namespace Models.Response
         public int DownVotes { get; set; }
 
         public DateTime CreatedAt { get; set; }
+
+        public List<CommentResponse> Comments { get; set; }
     }
 }
