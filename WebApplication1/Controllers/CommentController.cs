@@ -1,44 +1,40 @@
 ﻿using DataAccess.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.Request;
 using Models.Response;
 using NuGet.Common;
-using System;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
-using System.Security.Claims;
+using System;
 using System.Security.Policy;
 
 namespace WebApplication1.Controllers
 {
-    public class PostController : Controller
+    public class CommentController : Controller
     {
         public static readonly string url = "https://localhost:7249";
-
-        public ActionResult InsertPost(PostRequest post)
+        public ActionResult InsertComment(CommentRequest comm)
         {
-            List<PostResponse> postInfo = new List<PostResponse>();
+            var topicId = ViewBag.TopicId;
+
+            List<CommentResponse> commentInfo = new List<CommentResponse>();
             using (HttpClient client = new HttpClient())
             {
                 var token = Request.Cookies["token"];
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer",
                 token);
-                HttpResponseMessage response = client.PostAsJsonAsync($"{url}/api/Post", post).Result;
+                HttpResponseMessage response = client.PostAsJsonAsync($"{url}/api/Comment", comm).Result;
                 if (response.IsSuccessStatusCode)
                     if (response.IsSuccessStatusCode)
                     {
                         return RedirectToAction("Index", "Home");
                     }
             }
-            return RedirectToAction("Index", "Post");
+            return RedirectToAction("Index", "Comment");
         }
-
-        public ActionResult Index()
+        public IActionResult Index(int topicId, int postId)
         {
-            return View();
+            return View(new CommentRequest { PostId = postId, TopicId = topicId});
         }
     }
 }

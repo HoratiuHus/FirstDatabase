@@ -2,7 +2,7 @@
 
 namespace DataAccess.Data.Interfaces
 {
-    internal interface ICommentData
+    public interface ICommentData
     {
         Task DeleteCommentAsync(int id);
         Task<User?> GetByPostIDAsync(int id);

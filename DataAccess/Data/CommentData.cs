@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Data
 {
-    internal class CommentData : ICommentData
+    public class CommentData : ICommentData
     {
         private readonly ISqlDataAccess _db;
 

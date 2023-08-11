@@ -1,0 +1,22 @@
+﻿@using Models.Request
+@using Microsoft.AspNetCore
+@using Microsoft.AspNetCore.Http;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor context
+
+@model CommentRequest
+@{
+    ViewData["Title"] = "Comment Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("InsertComment", "Comment", FormMethod.Post))
+{
+<div class="text-allign">
+    <h1 class="display-4">Comment</h1>
+     @*   @Html.HiddenFor(m=>m.TopicId)
+        @Html.HiddenFor(m=>m.PostId)*@
+    <label for="comment"><b>Comment</b></label>
+        @Html.TextBoxFor(m => m.Comment)
+    <button type="submit">Comment</button>
+</div>
+}

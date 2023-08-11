@@ -14,6 +14,7 @@ builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddSingleton<IUserData, UserData>();
 builder.Services.AddSingleton<IPostData, PostData>();
 builder.Services.AddSingleton<ITopicData, TopicData>();
+builder.Services.AddSingleton<ICommentData, CommentData>();
 builder.Services.AddMvc();
 builder.Services.AddControllers();
 builder.Services.AddAuthentication(options =>
@@ -33,10 +34,11 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+
 var app = builder.Build();
 app.MapControllers();
 app.UseAuthorization();
-
+app.UseAuthentication();
 
 
 // Configure the HTTP request pipeline.
@@ -47,7 +49,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseAuthentication();
 
 
 //app.ConfigureApi();

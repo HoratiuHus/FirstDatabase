@@ -6,16 +6,16 @@
 }
 @using (Html.BeginForm("InsertPost", "Post", FormMethod.Post))
 {
-<div class="text-allign">
-    <h1 class="display-4">Post something</h1>
-    <label for="title"><b>Title</b></label>
+    <div class="text-allign">
+        <h1 class="display-4">Post something</h1>
+        <label for="title"><b>Title</b></label>
         @Html.TextBoxFor(m => m.Title)
-    <label for="body"><b>Body</b></label>
+        <label for="body"><b>Body</b></label>
         @Html.TextBoxFor(m => m.Body)
-    <label for="topicId"><b>TopicID</b></label>
-        @Html.TextBoxFor(m => m.TopicId, 10)
-    <label for="userId"><b>UserID</b></label>
-        @Html.TextBoxFor(m => m.UserId)
-    <button type="submit">Post</button>
-</div>
+        <label for="topicId"><b>TopicID</b></label>
+        @Html.TextBoxFor(m => m.TopicId)
+    @*  <label for="userId"><b>UserID</b></label>
+        @Html.TextBoxFor(m => m.UserId)*@
+        <button type="submit">post</button>
+    </div>
 }

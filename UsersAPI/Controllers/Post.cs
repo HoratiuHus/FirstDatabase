@@ -1,9 +1,12 @@
 ﻿using DataAccess.DatabaseAccess;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Models.Request;
 using Models.Response;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -120,10 +123,15 @@ namespace UsersAPI.Controllers
         }
 
         // POST api/<Post>
-        [HttpPost()]
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public Task NewPost([FromBody] PostRequest post)
         {
-            return _db.SaveDataAsync(storedProcedure: "dbo.spPost_Insert", new { post.Title, post.Body, post.UserId,
+            var claim = HttpContext.User.Claims;
+            var userClaim = claim.FirstOrDefault(x => x.Type.Equals("userId"));
+            int userId = int.Parse(userClaim.Value);
+
+            return _db.SaveDataAsync(storedProcedure: "dbo.spPost_Insert", new { post.Title, post.Body, UserId = userId,
                 post.TopicId, Upvotes = 0, Downvotes = 0  , CreatedAt = DateTime.Now });
         }
 

@@ -1,14 +1,7 @@
-﻿namespace Models.Response
+﻿namespace Models.Request
 {
     public class CommentRequest
     {
-        public CommentRequest(string comment, int userId, int postId, int topicId)
-        {
-            Comment = comment;
-            UserId = userId;
-            PostId = postId;
-            TopicId = topicId;
-        }
 
         public string Comment { get; set; }
 

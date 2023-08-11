@@ -54,38 +54,6 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-
-        //[HttpPost]
-        //public ActionResult WriteCookie()
-        //{
-        //    //Create a Cookie with a suitable Key.
-        //    HttpCookie nameCookie = new HttpCookie("Cookie");
-
-        //    //Set the Cookie value.
-        //    nameCookie.Values["Name"] = Request.Form["name"];
-
-        //    //Set the Expiry date.
-        //    nameCookie.Expires = DateTime.Now.AddDays(30);
-
-        //    //Add the Cookie to Browser.
-        //    Response.Cookies.Add(nameCookie);
-
-        //    return RedirectToAction("Index");
-        //}
-
-        //[HttpPost]
-        //public ActionResult ReadCookie()
-        //{
-        //    //Fetch the Cookie using its Key.
-        //    HttpCookie nameCookie = Request.Cookies["Name"];
-
-        //    //If Cookie exists fetch its value.
-        //    string name = nameCookie != null ? nameCookie.Value.Split('=')[1] : "undefined";
-
-        //    TempData["Message"] = name;
-
-        //    return RedirectToAction("Index");
-        //}
     }
 }
 

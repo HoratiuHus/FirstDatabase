@@ -9,6 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+
+builder.Services.AddAuthorization();
+
 
 
 var app = builder.Build();
@@ -26,7 +31,17 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+//app.Use(async (context, next) =>
+//{
+//    var token = context.Request.Cookies["token"];
+//    if (!string.IsNullOrEmpty(token))
+//    {
+//        context.Request.Headers.Add("Authorization", "Bearer " + token);
+//    }
+//    await next();
+//});
+//app.UseAuthentication();
+//app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",

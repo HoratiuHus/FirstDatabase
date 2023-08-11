@@ -1,5 +1,7 @@
 ﻿using DataAccess.DatabaseAccess;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Request;
@@ -20,10 +22,15 @@ namespace UsersAPI.Controllers
         }
 
         // POST api/<Comment>
-        [HttpPost()]
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public Task NewComment([FromBody] CommentRequest comment)
         {
-            return _db.SaveDataAsync(storedProcedure: "dbo.spComment_Insert", new { comment.Comment, comment.UserId, comment.PostId, comment.TopicId });
+            var claim = HttpContext.User.Claims;
+            var userClaim = claim.FirstOrDefault(x => x.Type.Equals("userId"));
+            int userId = int.Parse(userClaim.Value);
+
+            return _db.SaveDataAsync(storedProcedure: "dbo.spComment_Insert", new { comment.Comment, UserId = userId, comment.PostId, comment.TopicId });
         }
 
         // DELETE api/<Comment>/5

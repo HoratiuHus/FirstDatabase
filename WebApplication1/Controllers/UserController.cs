@@ -17,31 +17,33 @@ namespace WebApplication1.Controllers
     {
         public static readonly string url = "https://localhost:7249";
 
-        public async Task<IEnumerable<UserResponse>> GetUser(int userId)
+        public async Task<UserResponse> GetUser(string token)
         {
-            IEnumerable<UserResponse> userInfo = new List<UserResponse>();
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = await client.GetAsync($"{url}/api/User/{userId}");
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer",
+                token);
+                HttpResponseMessage response = await client.GetAsync($"{url}/api/User/byId");
+
                 if (response.IsSuccessStatusCode)
                 {
-                    var user = await response.Content.ReadFromJsonAsync<IEnumerable<UserResponse>>();
+                    var user = await response.Content.ReadFromJsonAsync<UserResponse>();
                     if (user != null)
-                        return user.ToList();
+                        return user;
                 }
             }
-            return userInfo;
+            throw new Exception();
 
         }
         public ActionResult Index()
         {
-            var token = Request.Cookies["token"].ToString();
+            var token = Request.Cookies["token"];
             if (token != null)
             {
-                var userId = User.Claims.FirstOrDefault(x => x.Type.Equals("userId"));
+                return View(GetUser(token).Result);
             }
-            return View();
+            return RedirectToAction("Index", "Login");
         }
     }
 }
